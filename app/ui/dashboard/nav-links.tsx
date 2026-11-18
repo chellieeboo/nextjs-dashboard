@@ -1,4 +1,5 @@
-"use client"; // kailangan ito dahil gumagamit tayo ng hook (usePathname) na sa browser tumatakbo
+"use client";
+usePathname;
 
 import {
   UserGroupIcon,
