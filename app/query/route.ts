@@ -1,26 +1,31 @@
-// import postgres from 'postgres';
+//  postgres library: talking to database
+import postgres from 'postgres';
 
-// const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
+// ceating connection using  POSTGRES_URL fr .env
+// ssl: 'require' = encrypt the connection need neon
+const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
-// async function listInvoices() {
-// 	const data = await sql`
-//     SELECT invoices.amount, customers.name
-//     FROM invoices
-//     JOIN customers ON invoices.customer_id = customers.id
-//     WHERE invoices.amount = 666;
-//   `;
+// Query: gewt the value of invoice and customer
+// JOIN = connect invoice, customer with using of customer id
+// WHERE = one invoice  (yung amount na 666)
+async function listInvoices() {
+  const data = await sql`
+    SELECT invoices.amount, customers.name
+    FROM invoices
+    JOIN customers ON invoices.customer_id = customers.id
+    WHERE invoices.amount = 666;
+  `;
 
-// 	return data;
-// }
+  return data;
+}
 
+// GET handler: running when we open  localhost:3000/query
 export async function GET() {
-  return Response.json({
-    message:
-      'Uncomment this file and remove this line. You can delete this file when you are finished.',
-  });
-  // try {
-  // 	return Response.json(await listInvoices());
-  // } catch (error) {
-  // 	return Response.json({ error }, { status: 500 });
-  // }
+  try {
+    // return the value of query as  JSON
+    return Response.json(await listInvoices());
+  } catch (error) {
+    
+    return Response.json({ error }, { status: 500 });
+  }
 }
